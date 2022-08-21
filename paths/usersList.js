@@ -4,7 +4,7 @@ const getUsers = async (req, res) => {
     try {
         const {maxId, limit} = req.params
         const users = (await pool.query(
-            'SELECT * FROM users WHERE id > $1 LIMIT $2',
+            'SELECT * FROM usersList WHERE id > $1 LIMIT $2',
             [maxId, limit]
         )).rows
         res.json(users)
