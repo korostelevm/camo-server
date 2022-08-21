@@ -1,20 +1,17 @@
 const pool = require('../pool')
 
-const getUsers = [
-    '/users/:maxId/:limit',
-    async (req, res) => {
-        try {
-            const { maxId, limit } = req.params
-            const users = (await pool.query(
-                'SELECT * FROM users WHERE id > $1 LIMIT $2',
-                [maxId, limit]
-            )).rows
-            res.json(users)
-        } catch(e) {
-            console.error(e.message)
-        }
+const getUsers = async (req, res) => {
+    try {
+        const {maxId, limit} = req.params
+        const users = (await pool.query(
+            'SELECT * FROM users WHERE id > $1 LIMIT $2',
+            [maxId, limit]
+        )).rows
+        res.json(users)
+    } catch (e) {
+        console.error(e.message)
     }
-]
+}
 
 /*app.post("", async (req, res) => {
     try {
@@ -40,4 +37,4 @@ const getUsers = [
     }
 });*/
 
-module.exports = [getUsers]
+module.exports.getUsers = getUsers
