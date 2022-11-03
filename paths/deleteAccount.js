@@ -5,15 +5,13 @@ const deleteAccount = async (req, res) => {
     try {
         const headers = req.headers
         if(headers.cookie) {
-            const { name, password } = req.body;
-            const user = (await pool.query(
-                'SELECT id, password FROM users WHERE name = $1',
-                [name]
-            )).rows;
-            if(!user.length || !(await bcrypt.compare(password, user[0].password))) {
-                return res.status(400).send('Wrong credentials')
-            }
             const sessionId = headers.cookie.split('=')[1]
+            const { name } = sessions[sessionId];
+            const user = (await pool.query(
+                'SELECT name, password FROM users WHERE name = $1',
+                [name]
+            )).rows[0];
+            const { password } = user;
             delete sessions[sessionId]
             res.set('Set-Cookie', 'session=; expires=Thu, 01 Jan 1970 00:00:00 GMT')
             await pool.query(

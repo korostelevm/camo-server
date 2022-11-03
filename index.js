@@ -21,7 +21,7 @@ sessions = {};
 app.post('/users/register', register)
 app.post('/users/login', login)
 app.get('/users/logout', logout)
-app.post('/users/delete', deleteAccount)
+app.get('/users/delete', deleteAccount)
 app.get('/user/:id', getUser)
 app.get('/users/list/:maxId/:limit', getUsers)
 
