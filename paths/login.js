@@ -13,10 +13,7 @@ const login = async (req, res) => {
             return res.status(400).send('Wrong credentials')
         }
         const sessionId = randomSessionId();
-        sessions[sessionId] = {
-            name,
-            password
-        }
+        sessions[sessionId] = { name }
         res.set('Set-Cookie', `session=${sessionId}`)
         res.send('Success')
     } catch (e) {
