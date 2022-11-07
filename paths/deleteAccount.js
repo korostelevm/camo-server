@@ -29,4 +29,4 @@ const deleteAccount = async (req, res) => {
     }
 }
 
-module.exports.deleteAccount = deleteAccount
+module.exports = deleteAccount

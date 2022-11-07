@@ -44,4 +44,4 @@ const register = async (req, res) => {
     }
 }
 
-module.exports.register = register
+module.exports = register

@@ -1,12 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const pool = require('./pool')
-const {getUser} = require('./paths/profile')
-const {getUsers} = require('./paths/usersList')
-const {login} = require('./paths/login')
-const {register} = require('./paths/register')
-const {logout} = require('./paths/logout')
-const {deleteAccount} = require('./paths/deleteAccount')
+const paths = require('./paths')
 
 const app = express()
 
@@ -17,12 +12,12 @@ app.use(express.json())
 const port = process.env.PORT || 5000;
 
 //ROUTES//
-app.post('/register', register)
-app.post('/login', login)
-app.get('/logout', logout)
-app.get('/users/delete', deleteAccount)
-app.get('/users/:username', getUser)
-app.get('/users/list/:start/:limit', getUsers)
+app.post('/register', paths?.register)
+app.post('/login', paths?.login)
+app.get('/logout', paths?.logout)
+app.get('/users/delete', paths?.deleteAccount)
+app.get('/users/:username', paths?.user)
+app.get('/users/list/:start/:limit', paths?.usersList)
 
 app.listen(port, async () => {
     try {

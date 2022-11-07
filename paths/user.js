@@ -19,4 +19,4 @@ const getUser = async (req, res) => {
     }
 }
 
-module.exports.getUser = getUser
+module.exports = getUser
