@@ -1,22 +1,22 @@
 const pool = require('../pool')
-const bcrypt = require("bcryptjs");
 
 const deleteAccount = async (req, res) => {
     try {
         const headers = req.headers
         if(headers.cookie) {
             const sessionId = headers.cookie.split('=')[1]
-            const { name } = sessions[sessionId];
-            const user = (await pool.query(
-                'SELECT name, password FROM users WHERE name = $1',
-                [name]
+            const {username} = (await pool?.query(
+                'SELECT username FROM sessions WHERE id = $1',
+                [sessionId]
             )).rows[0];
-            const { password } = user;
-            delete sessions[sessionId]
-            res.set('Set-Cookie', 'session=; expires=Thu, 01 Jan 1970 00:00:00 GMT')
-            await pool.query(
-                "DELETE FROM users WHERE name = $1",
-                [name]
+            await pool?.query(
+                'DELETE FROM sessions WHERE id = $1',
+                [sessionId]
+            )
+            res.clearCookie('session')
+            await pool?.query(
+                "DELETE FROM users WHERE username = $1",
+                [username]
             );
             res.send('Success')
         } else {

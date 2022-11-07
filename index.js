@@ -15,20 +15,19 @@ app.use(cors())
 app.use(express.json())
 
 const port = process.env.PORT || 5000;
-sessions = {};
 
 //ROUTES//
-app.post('/users/register', register)
-app.post('/users/login', login)
-app.get('/users/logout', logout)
+app.post('/register', register)
+app.post('/login', login)
+app.get('/logout', logout)
 app.get('/users/delete', deleteAccount)
-app.get('/user/:id', getUser)
-app.get('/users/list/:maxId/:limit', getUsers)
+app.get('/users/:username', getUser)
+app.get('/users/list/:start/:limit', getUsers)
 
 app.listen(port, async () => {
     try {
         console.log(`server has started on port ${port}`)
-        await pool.query(
+        await pool?.query(
             'ALTER SEQUENCE users_id_seq RESTART'
         );
     } catch (e) {

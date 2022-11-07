@@ -2,6 +2,7 @@
 node_modules
 pool.js
 scripts/flow/*/.flowconfig
+.env
 .flowconfig
 *~
 *.pyc

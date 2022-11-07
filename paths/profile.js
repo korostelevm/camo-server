@@ -4,10 +4,10 @@ const getUser = async (req, res) => {
     try {
         const headers = req.headers
         if(headers.cookie) {
-            const {id} = req.params
-            const users = (await pool.query(
-                'SELECT * FROM profilePages WHERE id = $1',
-                [id]
+            const {username} = req.params
+            const users = (await pool?.query(
+                'SELECT * FROM users WHERE username = $1',
+                [username]
             )).rows
             res.json(users)
         } else {

@@ -4,10 +4,13 @@ const getUsers = async (req, res) => {
     try {
         const headers = req.headers
         if(headers.cookie) {
-            const {maxId, limit} = req.params
-            const users = (await pool.query(
-                'SELECT * FROM usersList WHERE id > $1 LIMIT $2',
-                [maxId, limit]
+            const {start} = req.params;
+            let {limit} = req.params;
+            //check if the limit more than 10 users
+            limit = limit <= 10 ? limit : 10;
+            const users = (await pool?.query(
+                'SELECT * FROM users WHERE id >= $1 LIMIT $2',
+                [start, limit]
             )).rows
             res.json(users)
         } else {
