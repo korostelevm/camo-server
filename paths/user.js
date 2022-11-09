@@ -5,8 +5,9 @@ const getUser = async (req, res) => {
         const headers = req.headers
         if(headers.cookie) {
             const {username} = req.params
+            // get everything except password
             const users = (await pool?.query(
-                'SELECT * FROM users WHERE username = $1',
+                'SELECT username, name, lastname, friends, avatar, status, album, location FROM users WHERE username = $1',
                 [username]
             )).rows
             res.json(users)
