@@ -19,13 +19,22 @@ app.get('/users/delete', paths?.deleteAccount)
 app.get('/users/:username', paths?.user)
 app.get('/users/list/:start/:limit', paths?.usersList)
 
-app.listen(port, async () => {
-    try {
-        console.log(`server has started on port ${port}`)
-        await pool?.query(
-            'ALTER SEQUENCE users_id_seq RESTART'
-        );
-    } catch (e) {
-        console.log(e);
+
+pool.connect(async (err, client) => {
+    if (err) {
+      return console.error('Error acquiring client', err.stack)
     }
-})
+    
+    app.listen(port, async () => {
+        try {
+            console.log(`server has started on port ${port}`)
+            await pool?.query(
+                'ALTER SEQUENCE users_id_seq RESTART'
+            );
+        } catch (e) {
+            console.log(e);
+        }
+    })
+
+  })
+
