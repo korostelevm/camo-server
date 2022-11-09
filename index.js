@@ -25,6 +25,10 @@ app.listen(port, async () => {
         await pool?.query(
             'ALTER SEQUENCE users_id_seq RESTART'
         );
+        const test = (await pool?.query(
+            'SELECT * FROM users'
+        )).rows
+        console.log(test)
     } catch (e) {
         console.log(e);
     }
